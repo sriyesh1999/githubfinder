@@ -18,6 +18,7 @@ import React, { Component } from 'react'
                     <input type="text" placeholder="Search users"onChange={(e)=>this.setState({text :e.target.value})} value={this.state.text}/>
                     <input type="submit" value="Search" className="btn btn-dark btn-block"/>
                 </form>
+                <button className="btn btn-light btn-block" onClick={this.props.clearUsers}>Clear</button>
             </div>
         )
     }

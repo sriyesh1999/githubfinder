@@ -30,6 +30,10 @@ import Search from './components/Search'
   
    searchUsers = async text => 
    {
+    this.setState({
+     
+      loading:true
+    })
      console.log(text)
     const res= await axios.get(`https://api.github.com/search/users?q=${text}`);
     console.log(res.data.items)
@@ -38,8 +42,12 @@ import Search from './components/Search'
       loading:false
     })
   }
+  clearUsers=()=>(this.setState({
+    users:[],
+    loading:false
+  })
 
-  
+  ) 
   render() 
   {
     
@@ -51,7 +59,7 @@ import Search from './components/Search'
         <Navbar />
        
         <div className="container"> 
-        <Search searchUsers={this.searchUsers}/>
+        <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers}/>
         <Users loading={this.state.loading} users={this.state.users} />
         </div>
       </div>
