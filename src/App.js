@@ -2,15 +2,19 @@
 
 import './App.css';
 import axios from 'axios'
-import React, { Component } from 'react'
+import React, { Component ,Fragment } from 'react'
+import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
 import Navbar from './components/layouts/Navbar'
 import Users from './components/Users'
 import Search from './components/Search'
+import Alert from './components/Alert'
+import About from './components/About'
  class App extends Component
 {
   state={
     users:[],
-    loading:false
+    loading:false,
+    alert:null
   }
   
   async componentDidMount()
@@ -26,7 +30,13 @@ import Search from './components/Search'
     }
      
       
-      
+    setAlert=(msg,type)=>{
+      console.log(type)
+    
+      this.setState({alert:{msg,type}})
+      setTimeout( () => this.setState({alert:null}), 5000)
+    
+      }
   
    searchUsers = async text => 
    {
@@ -55,13 +65,28 @@ import Search from './components/Search'
     
     return (
       <div>
-        
+        <Router>
         <Navbar />
        
         <div className="container"> 
-        <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers}/>
-        <Users loading={this.state.loading} users={this.state.users} />
+        <Alert alert={this.state.alert}/>
+        <Switch>
+          <Route exact path='/' render={props=>(
+            <Fragment>
+              <Search setAlert={this.setAlert} searchUsers={this.searchUsers} clearUsers={this.clearUsers} showclear={this.state.users.length>0?true:false}/>
+              <Users loading={this.state.loading} users={this.state.users} />
+
+
+            </Fragment>
+          
+          )}/>
+          <Route exact path="/about" component={About}/>
+        </Switch>
+        
+        
         </div>
+        </Router>
+        
       </div>
      
     )
