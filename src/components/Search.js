@@ -18,7 +18,7 @@ import React, { Component } from 'react'
 
     }
     show_button=()=>{
-        console.log(this.props.showclear)
+        
         if(this.props.showclear)
         {
             return(

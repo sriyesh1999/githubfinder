@@ -1,9 +1,9 @@
 import React from 'react'
-
+import {Link} from 'react-router-dom'
  const  UserItem =(props)=> {
    
     
-        const {avatar_url,login,html_url}=props.user
+        const {avatar_url,login}=props.user
        
         return (
             
@@ -12,7 +12,7 @@ import React from 'react'
                 <img src={avatar_url} alt="" className="round-img" style={{width:"60px"}}></img>
             <h3>{login}</h3>
         <div>
-            <a href={html_url} className="btn btn-dark btn-sm my-1">more</a>
+            <Link to={`/user/${login}`} className="btn btn-dark btn-sm my-1">more</Link>
         </div>
             </div>
         )

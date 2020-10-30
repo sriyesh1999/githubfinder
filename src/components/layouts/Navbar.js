@@ -11,10 +11,11 @@ const  Navbar =()=> {
     
         return (
             <div className="navbar bg-dark">
-                <h1><i className={props.icon}/> {props.title}</h1>
+              <Link to="/"><h1><i className={props.icon}/> {props.title}</h1></Link>
                 <ul>
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/about">About</Link></li>
+                    
                 </ul>
             </div>
         )
