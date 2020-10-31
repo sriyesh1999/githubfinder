@@ -1,32 +1,22 @@
-import React, { Fragment,Component } from 'react'
+import React, { Fragment ,useEffect,useContext} from 'react'
 import Spinner from './Spinner'
 import {Link} from 'react-router-dom'
 import {Repos} from './Repos'
+import githubContext from '../context/github/githubContext'
 
- class User extends Component {
-     componentDidMount(){
-         console.log(this.props.match.params.login)
-         this.props.getUser(this.props.match.params.login)
-         this.props.getRepos(this.props.match.params.login)
-     }
-    render() {
+ const  User =({match})=> {
+     const gt= useContext(githubContext)
+     useEffect(()=>{
+          gt.getUser(match.params.login)
+        gt.getRepos(match.params.login)
+        //eslint-disable-next-line
+     },[])
+     
         
-console.log(this.props.repos)
-const {name,
-avatar_url,
-location,
-bio,
-blog,
-login,
-html_url,
-followers,
-following,
-public_repos,
-public_gists,
-hireable,company
-}=this.props.user
-const {loading} =this.props
-if(loading)
+
+const {name,avatar_url,location,bio,blog,login,html_url,followers,following,public_repos,public_gists,hireable,company}=gt.user
+
+if(gt.loading)
 {
     return <Spinner/>
 }
@@ -92,12 +82,12 @@ if(loading)
             </div>
            
                     
-            <Repos repos={this.props.repos}></Repos>
+            <Repos ></Repos>
        
             </Fragment>
 
         )
-    }
 }
+
 
 export default User

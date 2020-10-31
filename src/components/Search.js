@@ -1,44 +1,49 @@
-import React, { Component } from 'react'
+import React,{useState,useContext} from 'react'
+import GithubContext from '../context/github/githubContext'
 
- class Search extends Component {
-     state={
-            text:''
-        }
-    onSubmit=(e)=>{
+ const Search=({showclear,clearUsers,setAlert}) => 
+ {
+     const githubContext=useContext(GithubContext)
+     const [text, setText ]=useState('')
+    const onSubmit=(e)=>{
+
         e.preventDefault()
-        if(this.state.text==='')
+        if(text==='')
         {
-            this.props.setAlert('Please enter something','light')
+            setAlert('Please enter something','light')
         }
         else{
-            this.props.searchUsers(this.state.text)
-            this.setState({text:''})
+            githubContext.searchUsers(text)
+            setText('')
         }
         
 
     }
-    show_button=()=>{
+    const show_button=()=>{
         
-        if(this.props.showclear)
+        if(githubContext.users.length>0?true:false)
         {
             return(
-                <button className="btn btn-light btn-block" onClick={this.props.clearUsers}>Clear</button>
+                <button className="btn btn-light btn-block" onClick={githubContext.clearUsers}>Clear</button>
 
             )
         }
-    }
-    render() {
+        }
+        const onchange = (e)=>{
+            setText(e.target.value)
+        }
+
         
         return (
             <div>
-                <form onSubmit={this.onSubmit} className="form">
-                    <input type="text" placeholder="Search users"onChange={(e)=>this.setState({text :e.target.value})} value={this.state.text}/>
+                <form onSubmit={onSubmit} className="form">
+                    <input type="text" placeholder="Search users"onChange={onchange} value={text}/>
                     <input type="submit" value="Search" className="btn btn-dark btn-block"/>
                 </form>
-                {this.show_button()}
+                {show_button()}
             </div>
         )
     }
-}
+
 
 export default Search
